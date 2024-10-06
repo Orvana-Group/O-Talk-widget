@@ -1,50 +1,91 @@
-# React + TypeScript + Vite
+<h2>💼 Subscription Plans</h2>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p>O-Talk offers flexible subscription plans tailored to fit the needs of different users, whether you're just getting started or managing large-scale customer interactions. Choose the plan that works best for you:</p>
 
-Currently, two official plugins are available:
+<h3>1. Basic Plan</h3>
+<ul>
+    <li><strong>Price:</strong> $9.99/month</li>
+    <li><strong>Features:</strong>
+        <ul>
+            <li>Up to 1,000 conversations per month</li>
+            <li>Customizable theme color</li>
+            <li>Basic support</li>
+        </ul>
+    </li>
+</ul>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<h3>2. Pro Plan</h3>
+<ul>
+    <li><strong>Price:</strong> $29.99/month</li>
+    <li><strong>Features:</strong>
+        <ul>
+            <li>Up to 10,000 conversations per month</li>
+            <li>Full chatbot customization (theme, language, positioning)</li>
+            <li>Integration with CRM and analytics tools</li>
+            <li>Priority email support</li>
+        </ul>
+    </li>
+</ul>
 
-## Expanding the ESLint configuration
+<h3>3. Enterprise Plan</h3>
+<ul>
+    <li><strong>Price:</strong> Custom pricing (contact us)</li>
+    <li><strong>Features:</strong>
+        <ul>
+            <li>Unlimited conversations</li>
+            <li>Dedicated account manager</li>
+            <li>Custom feature development</li>
+            <li>Integration with advanced tools (AI, multi-language support)</li>
+            <li>24/7 premium support</li>
+        </ul>
+    </li>
+</ul>
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+<p><strong>Note:</strong> All plans come with a 14-day free trial, so you can test out O-Talk before committing to a subscription!</p>
 
-- Configure the top-level `parserOptions` property like this:
+<hr>
+Once you got your subscription then...
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+<h2>🚀 Start Chatting</h2>
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+<p>This is the example procedure of attaching our chatbot on your page.</p>
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+<h3>1. Include O-Talk Script</h3>
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+<p>Add the following snippet to your website's <code>&lt;head&gt;</code> or just before the closing <code>&lt;/body&gt;</code> tag:</p>
+
+<pre>
+<code>&lt;script src="https://o-talk.com/chatbot.js" DATA_USER_ID='your_unique_id'&gt;&lt;/script&gt;</code>
+</pre>
+
+<h3>2. Initialize the Chatbot</h3>
+
+<p>To initialize the chatbot, simply include the following code after the script:</p>
+
+<pre>
+<code>&lt;script&gt;
+  OTalk.init({
+    botId: 'YOUR_BOT_ID',
+    themeColor: '#ff6347', // Customize with your preferred color
+    position: 'bottom-right', // Options: 'bottom-right', 'bottom-left', etc.
+    welcomeMessage: 'Hi! How can I help you today?',
+  });
+&lt;/script&gt;
+</code>
+</pre>
+
+<h3>3. Customize the Chatbot (Optional)</h3>
+
+<p>You can further customize the chatbot's behavior and appearance:</p>
+
+<pre>
+<code>OTalk.init({
+  botId: 'YOUR_BOT_ID',
+  themeColor: '#123456', // Match your brand colors
+  position: 'bottom-right', 
+  welcomeMessage: 'Hello! How can we assist you?',
+  language: 'en', // Supports 'en', 'es', 'fr', etc.
+  autoOpen: false, // Set to true if you want the chat to open automatically on page load
+});
+</code>
+</pre>
