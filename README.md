@@ -1,50 +1,94 @@
-# React + TypeScript + Vite
+<h2>💼 Subscription Plans</h2>
+<p>
+  O-Talk is planning to introduce a range of flexible subscription plans
+  designed to cater to various user needs, from individual users to larger teams
+  managing customer interactions. These plans are expected to provide options
+  for different usage levels, customization possibilities, and varying levels of
+  support.
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<h3>1. Basic Plan</h3>
+<ul>
+  <li><strong>Price:</strong> To be announced</li>
+  <li>
+    <strong>Details:</strong> This entry-level plan is intended to cover
+    essential requirements, ideal for those starting out or handling low-volume
+    interactions.
+  </li>
+</ul>
 
-Currently, two official plugins are available:
+<h3>2. Pro Plan</h3>
+<ul>
+  <li><strong>Price:</strong> To be announced</li>
+  <li>
+    <strong>Details:</strong> The Pro Plan is expected to offer advanced
+    features and more flexibility, potentially including higher interaction
+    limits and enhanced customization options.
+  </li>
+</ul>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<h3>3. Enterprise Plan</h3>
+<ul>
+  <li><strong>Price:</strong> Custom pricing (to be determined)</li>
+  <li>
+    <strong>Details:</strong> Tailored for large-scale operations, the
+    Enterprise Plan aims to deliver comprehensive solutions with dedicated
+    support and potential for bespoke feature development.
+  </li>
+</ul>
 
-## Expanding the ESLint configuration
+<p>
+  <strong>Note:</strong> These plans are currently under development, and more
+  details will be shared once they become available.
+</p>
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+<hr />
 
-- Configure the top-level `parserOptions` property like this:
+<h2>🚀 Start Chatting</h2>
+<p>
+  The process for integrating our chatbot on your page is currently being
+  structured. Here’s a preview of the expected steps:
+</p>
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+<h3>1. Include O-Talk Script</h3>
+<p>
+  The setup will likely involve adding a script snippet to your website's
+  <code>&lt;head&gt;</code> or just before the closing
+  <code>&lt;/body&gt;</code> tag:
+</p>
+<pre><code>&lt;script src="https://o-talk.com/chatbot.js" DATA_USER_ID='your_unique_id'&gt;&lt;/script&gt;</code></pre>
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+<h3>2. Initialize the Chatbot</h3>
+<p>
+  To activate the chatbot, the initialization step will require a script similar
+  to:
+</p>
+<pre><code>&lt;script&gt;
+      OTalk.init({
+        botId: 'YOUR_BOT_ID',
+        themeColor: '#ff6347', // Customize with your preferred color
+        position: 'bottom-right', // Options: 'bottom-right', 'bottom-left', etc.
+        welcomeMessage: 'Hi! How can I help you today?',
+      });
+    &lt;/script&gt;
+    </code></pre>
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+<h3>3. Customize the Chatbot (Optional)</h3>
+<p>
+  We are also considering offering customization options, allowing you to
+  personalize the chatbot’s appearance and behavior:
+</p>
+<pre><code>OTalk.init({
+      botId: 'YOUR_BOT_ID',
+      themeColor: '#123456', // Match your brand colors
+      position: 'bottom-right', 
+      welcomeMessage: 'Hello! How can we assist you?',
+      language: 'en', // Potentially supporting 'en', 'es', 'fr', etc.
+      autoOpen: false, // You may have the option to auto-open the chat on page load
+    });
+    </code></pre>
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+<p>
+  These steps and configurations are still being planned, and detailed
+  instructions will be provided once everything is finalized.
+</p>
