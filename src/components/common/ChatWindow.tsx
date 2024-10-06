@@ -35,7 +35,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 }) => {
   return (
     <Card className="fixed bottom-0 right-0 p-0 w-96">
-      <CardHeader className="flex justify-between items-center p-2 pl-4 py-4">
+      <CardHeader className="flex flex-row justify-between items-center p-2 pl-4 py-4">
         <img
           src="/logo-no-background.svg"
           alt="Orvana Group"
