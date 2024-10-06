@@ -14,7 +14,7 @@ interface AppProps {
   config: Config;
 }
 
-const App: React.FC<AppProps> = ({ config }) => {
+const App: React.FC<AppProps> = ({config}: AppProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
