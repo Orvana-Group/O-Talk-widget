@@ -14,71 +14,76 @@ interface AppProps {
   config: Config;
 }
 
-const App: React.FC<AppProps> = ({config}: AppProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const initialMessages: Message[] = [
+const App: React.FC<AppProps> = ({ config }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      message: config.firstMessage || "Hello, how are you?",
+      message: config.firstMessage || "Hello, ask me anything!",
       sender: "Bot",
       hour: new Date().toLocaleTimeString("pl-PL", {
         hour: "2-digit",
         minute: "2-digit",
       }),
     },
-    // ... other initial messages if any
-  ];
+  ]);
 
-  const [messages, setMessages] = useState<Message[]>(initialMessages);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  const messageIdRef = useRef<number>(messages.length);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, loading]);
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const handleSubmit = async () => {
-    await handleSendMessage();
+    if (message.trim() === "") return;
+
+    addMessage(message, "Client");
+    setMessage(""); // Clear the input field after sending the message
     setLoading(true);
-    setTimeout(() => {
-      simulateBotResponse();
+
+    try {
+      const botReply = await getBotResponse(message);
+      addMessage(botReply, "Bot");
+    } catch (error) {
+      console.error("Error getting bot response:", error);
+    } finally {
       setLoading(false);
-    }, 3000);
+    }
   };
 
-  const handleSendMessage = async () => {
-    if (message.trim() === "") return;
+  const addMessage = (text: string, sender: "Client" | "Bot") => {
+    messageIdRef.current += 1;
     const newMessage: Message = {
-      id: messages.length + 1,
-      message,
-      sender: "Client",
+      id: messageIdRef.current,
+      message: text,
+      sender,
       hour: new Date().toLocaleTimeString("pl-PL", {
         hour: "2-digit",
         minute: "2-digit",
       }),
     };
     setMessages((prev) => [...prev, newMessage]);
-    setMessage("");
   };
 
-  const simulateBotResponse = () => {
-    const botResponse: Message = {
-      id: messages.length + 1,
-      message: "Yeah, sure! I can help you with that.",
-      sender: "Bot",
-      hour: new Date().toLocaleTimeString("pl-PL", {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    };
-    setMessages((prev) => [...prev, botResponse]);
+  const getBotResponse = async (prompt: string): Promise<string> => {
+    const response = await fetch("http://localhost:8000", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prompt }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    return data.response;
   };
 
   const handleClickFileUpload = () => {

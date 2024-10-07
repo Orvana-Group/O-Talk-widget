@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')!).render(
         primaryColor: "#000",
         isAudioEnabled: true,
         isFilesEnabled: true,
-        firstMessage: "Hello, how are you?"
+        firstMessage: "Hello, ask me anything!",
       }}
     />
   </StrictMode>,
