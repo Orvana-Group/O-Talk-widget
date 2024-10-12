@@ -88,7 +88,7 @@ const App: React.FC<AppProps> = ({ config }) => {
         try {
             setHistoryIsLoading(true)
             setIsOpen(true)
-            const history = await fetch('http://localhost:3000/chat-messages', {
+            const history = await fetch('http://localhost:3000/chat-history', {
                 credentials: 'include',
             })
             const data = await history.json()
