@@ -17,8 +17,8 @@ const App: React.FC<AppProps> = ({ config }) => {
     const [messages, setMessages] = useState<Message[]>([
         {
             id: 1,
-            message_text: config.firstMessage || 'Hello, ask me anything!',
-            sender: 'assistant',
+            content: config.firstMessage || 'Hello, ask me anything!',
+            role: 'assistant',
             hour: new Date().toLocaleTimeString('pl-PL', {
                 hour: '2-digit',
                 minute: '2-digit',
@@ -52,12 +52,12 @@ const App: React.FC<AppProps> = ({ config }) => {
         }
     }
 
-    const addMessage = (text: string, sender: 'user' | 'assistant') => {
+    const addMessage = (text: string, role: 'user' | 'assistant') => {
         messageIdRef.current += 1
         const newMessage: Message = {
             id: messageIdRef.current,
-            message_text: text,
-            sender,
+            content: text,
+            role,
             hour: new Date().toLocaleTimeString('pl-PL', {
                 hour: '2-digit',
                 minute: '2-digit',
@@ -105,8 +105,8 @@ const App: React.FC<AppProps> = ({ config }) => {
             setMessages([
                 {
                     id: 1,
-                    message_text: 'Hello, ask me anything!',
-                    sender: 'assistant',
+                    content: 'Hello, ask me anything!',
+                    role: 'assistant',
                     hour: new Date().toLocaleTimeString('pl-PL', {
                         hour: '2-digit',
                         minute: '2-digit',
