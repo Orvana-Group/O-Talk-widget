@@ -50,8 +50,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                             ? [
                                   {
                                       id: 1,
-                                      message: "Give me a moment, I'm loading the chat history...",
-                                      sender: 'Bot',
+                                      message_text: "Give me a moment, I'm loading the chat history...",
+                                      sender: 'assistant',
                                       hour: new Date().toLocaleTimeString('pl-PL', {
                                           hour: '2-digit',
                                           minute: '2-digit',

@@ -17,8 +17,8 @@ const App: React.FC<AppProps> = ({ config }) => {
     const [messages, setMessages] = useState<Message[]>([
         {
             id: 1,
-            message: config.firstMessage || 'Hello, ask me anything!',
-            sender: 'Bot',
+            message_text: config.firstMessage || 'Hello, ask me anything!',
+            sender: 'assistant',
             hour: new Date().toLocaleTimeString('pl-PL', {
                 hour: '2-digit',
                 minute: '2-digit',
@@ -38,25 +38,25 @@ const App: React.FC<AppProps> = ({ config }) => {
     const handleSubmit = async () => {
         if (message.trim() === '') return
 
-        addMessage(message, 'Client')
+        addMessage(message, 'user')
         setMessage('') // Clear the input field after sending the message
         setLoading(true)
 
         try {
             const botReply = await getBotResponse(message)
-            addMessage(botReply, 'Bot')
+            addMessage(botReply, 'assistant')
         } catch {
-            addMessage("I'm sorry, I couldn't process your message.", 'Bot')
+            addMessage("I'm sorry, I couldn't process your message.", 'assistant')
         } finally {
             setLoading(false)
         }
     }
 
-    const addMessage = (text: string, sender: 'Client' | 'Bot') => {
+    const addMessage = (text: string, sender: 'user' | 'assistant') => {
         messageIdRef.current += 1
         const newMessage: Message = {
             id: messageIdRef.current,
-            message: text,
+            message_text: text,
             sender,
             hour: new Date().toLocaleTimeString('pl-PL', {
                 hour: '2-digit',
@@ -81,24 +81,32 @@ const App: React.FC<AppProps> = ({ config }) => {
         }
 
         const data = await response.json()
-        return data.response
+        return data.message
     }
 
     const handleOpenChat = async () => {
         try {
             setHistoryIsLoading(true)
             setIsOpen(true)
-            const history = await fetch('http://localhost:3000/history', {
+            const history = await fetch('http://localhost:3000/chat-messages', {
                 credentials: 'include',
             })
             const data = await history.json()
+            // map timestamp to hour
+            data.forEach((message: { timestamp: string; hour: string }) => {
+                message.hour = new Date(message.timestamp).toLocaleTimeString('pl-PL', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                })
+            })
+            console.log(data)
             setMessages(data)
         } catch {
             setMessages([
                 {
                     id: 1,
-                    message: 'Hello, ask me anything!',
-                    sender: 'Bot',
+                    message_text: 'Hello, ask me anything!',
+                    sender: 'assistant',
                     hour: new Date().toLocaleTimeString('pl-PL', {
                         hour: '2-digit',
                         minute: '2-digit',

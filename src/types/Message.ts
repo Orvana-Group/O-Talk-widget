@@ -1,6 +1,6 @@
 export interface Message {
     id: number
-    message: string
-    sender: 'Client' | 'Bot'
+    message_text: string
+    sender: 'user' | 'assistant'
     hour: string
 }
