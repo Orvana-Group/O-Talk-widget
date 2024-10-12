@@ -12,6 +12,7 @@ interface ChatWindowProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   messages: Message[];
   loading: boolean;
+  chatHistoryIsLoading: boolean;
   messagesEndRef: RefObject<HTMLDivElement>;
   config: Config;
   message: string;
@@ -25,6 +26,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   setIsOpen,
   messages,
   loading,
+  chatHistoryIsLoading,
   messagesEndRef,
   config,
   message,
@@ -33,6 +35,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   handleClickFileUpload,
   fileInputRef,
 }) => {
+
   return (
     <Card className="fixed bottom-0 right-0 p-0 w-96">
       <CardHeader className="flex flex-row justify-between items-center p-2 pl-4 py-4">
@@ -52,7 +55,15 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
       </CardHeader>
       <CardContent className="px-6 py-0">
         <MessageList
-          messages={messages}
+          messages={ chatHistoryIsLoading ? [{
+            id: 1,
+            message: "Give me a moment, I'm loading the chat history...",
+            sender: "Bot",
+            hour: new Date().toLocaleTimeString("pl-PL", {
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+          }] : messages }
           loading={loading}
           messagesEndRef={messagesEndRef}
         />

@@ -30,6 +30,7 @@ const App: React.FC<AppProps> = ({ config }) => {
     },
   ]);
 
+  const [historyIsLoading, setHistoryIsLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messageIdRef = useRef<number>(messages.length);
@@ -48,8 +49,8 @@ const App: React.FC<AppProps> = ({ config }) => {
     try {
       const botReply = await getBotResponse(message);
       addMessage(botReply, "Bot");
-    } catch (error) {
-      console.error("Error getting bot response:", error);
+    } catch {
+      addMessage("I'm sorry, I couldn't process your message.", "Bot");
     } finally {
       setLoading(false);
     }
@@ -70,12 +71,13 @@ const App: React.FC<AppProps> = ({ config }) => {
   };
 
   const getBotResponse = async (prompt: string): Promise<string> => {
-    const response = await fetch("http://localhost:8000", {
+    const response = await fetch("http://localhost:3000", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ prompt }),
+      credentials: "include",
     });
 
     if (!response.ok) {
@@ -84,6 +86,32 @@ const App: React.FC<AppProps> = ({ config }) => {
 
     const data = await response.json();
     return data.response;
+  };
+
+  const handleOpenChat = async () => {
+    try {
+      setHistoryIsLoading(true);
+      setIsOpen(true);
+      const history = await fetch("http://localhost:3000/history", {
+        credentials: "include",
+      });
+      const data = await history.json();
+      setMessages(data);
+    } catch {
+      setMessages([
+        {
+          id: 1,
+          message: "Hello, ask me anything!",
+          sender: "Bot",
+          hour: new Date().toLocaleTimeString("pl-PL", {
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+        },
+      ]);
+    } finally {
+      setHistoryIsLoading(false);
+    }
   };
 
   const handleClickFileUpload = () => {
@@ -97,7 +125,7 @@ const App: React.FC<AppProps> = ({ config }) => {
           <Button
             variant="default"
             className={isOpen ? "hidden" : "block"}
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => handleOpenChat()}
           >
             Open
           </Button>
@@ -108,6 +136,7 @@ const App: React.FC<AppProps> = ({ config }) => {
             setIsOpen={setIsOpen}
             messages={messages}
             loading={loading}
+            chatHistoryIsLoading={historyIsLoading}
             messagesEndRef={messagesEndRef}
             config={config}
             message={message}
