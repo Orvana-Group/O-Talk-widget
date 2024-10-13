@@ -2,9 +2,9 @@ import React, { RefObject } from 'react'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { GrAttachment } from 'react-icons/gr'
-import { IoIosSend } from "react-icons/io";
+import { IoIosSend } from 'react-icons/io'
 import { Config } from '@/types/Config'
-import { MdClear } from "react-icons/md";
+import { MdHistory } from 'react-icons/md'
 
 interface MessageInputProps {
     config: Config
@@ -16,9 +16,20 @@ interface MessageInputProps {
     fileInputRef: RefObject<HTMLInputElement>
 }
 
-export const MessageInput: React.FC<MessageInputProps> = ({ config, message, setMessage, handleSubmit, handleClearHistory, handleClickFileUpload, fileInputRef }) => {
+export const MessageInput: React.FC<MessageInputProps> = ({
+    config,
+    message,
+    setMessage,
+    handleSubmit,
+    handleClearHistory,
+    handleClickFileUpload,
+    fileInputRef,
+}) => {
     return (
         <div className="flex gap-2 w-full">
+            <Button onClick={handleClearHistory} variant="outline" size="icon" className="w-20">
+                <MdHistory />
+            </Button>
             {config.isFilesEnabled && (
                 <>
                     <Input type="file" className="hidden" ref={fileInputRef} />
@@ -38,11 +49,8 @@ export const MessageInput: React.FC<MessageInputProps> = ({ config, message, set
                     }
                 }}
             />
-            <Button onClick={handleSubmit} variant="default" size='icon' className="w-20 hover:bg-transparent border border-primary">
+            <Button onClick={handleSubmit} variant="default" size="icon" className="w-20 hover:bg-transparent border border-primary">
                 <IoIosSend />
-            </Button>
-            <Button onClick={handleClearHistory} variant="default" size='icon' className="w-20 hover:bg-transparent border border-primary">
-                <MdClear />
             </Button>
         </div>
     )
