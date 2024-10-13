@@ -52,6 +52,35 @@ const App: React.FC<AppProps> = ({ config }) => {
         }
     }
 
+    const handleClearHistory = async () => {
+        console.log('Clearing chat history...')
+        try {
+            setHistoryIsLoading(true)
+            const response = await fetch('http://localhost:3000/chat-history', {
+                method: 'DELETE',
+                credentials: 'include',
+            })
+            if (!response.ok) {
+                throw new Error('Network response was not ok')
+            }
+            setMessages([
+                {
+                    id: 1,
+                    content: config.firstMessage || 'Hello, ask me anything!',
+                    role: 'assistant',
+                    hour: new Date().toLocaleTimeString('pl-PL', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                    }),
+                },
+            ])
+        } catch {
+            addMessage("I'm sorry, I couldn't clear the chat history.", 'assistant')
+        } finally {
+            setHistoryIsLoading(false)
+        }
+    }
+
     const addMessage = (text: string, role: 'user' | 'assistant') => {
         messageIdRef.current += 1
         const newMessage: Message = {
@@ -142,6 +171,7 @@ const App: React.FC<AppProps> = ({ config }) => {
                         message={message}
                         setMessage={setMessage}
                         handleSubmit={handleSubmit}
+                        handleClearHistory={handleClearHistory}
                         handleClickFileUpload={handleClickFileUpload}
                         fileInputRef={fileInputRef}
                     />

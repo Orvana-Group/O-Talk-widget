@@ -18,6 +18,7 @@ interface ChatWindowProps {
     message: string
     setMessage: React.Dispatch<React.SetStateAction<string>>
     handleSubmit: () => void
+    handleClearHistory: () => void
     handleClickFileUpload: () => void
     fileInputRef: RefObject<HTMLInputElement>
 }
@@ -32,6 +33,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     message,
     setMessage,
     handleSubmit,
+    handleClearHistory,
     handleClickFileUpload,
     fileInputRef,
 }) => {
@@ -70,6 +72,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                     message={message}
                     setMessage={setMessage}
                     handleSubmit={handleSubmit}
+                    handleClearHistory={handleClearHistory}
                     handleClickFileUpload={handleClickFileUpload}
                     fileInputRef={fileInputRef}
                 />
